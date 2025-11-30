@@ -5,7 +5,8 @@
 *.dll
 *.so
 *.out
-./compilar.txt
+compilar.txt
+
 bin/
 build/
 Debug/
