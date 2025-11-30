@@ -1,0 +1,16 @@
+
+*.exe
+*.o
+*.obj
+*.dll
+*.so
+*.out
+./compilar.txt
+bin/
+build/
+Debug/
+Release/
+
+.vscode/
+.vs/
+*.user
