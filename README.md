@@ -1,6 +1,22 @@
 # WHO TAKES TWO? - Jogo Multithreading
 Este projeto consiste em uma implementação de um jogo Top-Down, com 2 players. O processo é dividido 3 threads, uma main que coleta os inputs e renderiza o jogo e uma thread para a logica de cada player.
 
+## Explicando o Projeto
+
+### Threads
+A ideia de utilizar 3 threads busca trazer independência entre as lógicas dos jogadores e da renderização\
+Para ser sincero, não traz nenhum ganho de desempenho. A questão é que se algum Player demorar muito em seu algoritmo, o outro Player não precisa ficar esperando este algoritmo acabar.\
+Já a questão da thread de renderização estar desacoplada, é bem util, pois os players podem seguir uma taxa de atualização mais lenta enquanto a renderização segue uma mais rápida, parecendo mais fluido para o usuário e protegendo de gargalos visuais.
+
+### Semáforos (Mutexes)
+
+Neste projeto utilizamos apenas mutexes para proteger as seções críticas, que são listadas a seguir:
+- *Grid*: O Tabuleiro é modificado tanto pela thread do P1 quanto pela do P2, para realizar seus movimentos, e são lidas pelo render na main
+- *gameState*: O estado do jogo, assim como o grid, é modificado por P1 e P2 e lido pelo render
+- *scores*: As pontuações de P1 e P2 são alteradas pelos mesmos, e lidas pelo render.
+- *Direção P1*: A direção que P1 deve seguir é guardada em uma variável, sempre protegida por seu mutex, pois a Main produz as direções enquanto a thread do P1 consome
+- *Direção P2*: A direção que P2 deve seguir é guardada em uma variável, sempre protegida por seu mutex, pois a Main produz as direções enquanto a thread do P2 consome
+  
 ## Como Jogar?
 Para o Player 1 (Azul) os comandos são:\
 W -> Cima\
