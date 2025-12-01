@@ -82,6 +82,7 @@ class Game{
             lock_guard lock(mstate);
             return state;
         }
+        
 
         //Altera estado do jogo
         void setGameState(GameState new_state){
@@ -169,6 +170,7 @@ class Game{
             else if(curState == GameState::P1WINS){
                 renderer.drawGrid(board.grid);
                 renderer.drawWinner(GameState::P1WINS);
+                renderer.drawStart();
             }
             else if(curState == GameState::P2WINS){
                 renderer.drawGrid(board.grid);
