@@ -8,8 +8,11 @@ using namespace std;
 
 #include "Types.hpp"
 
+
+
 class Board;
 
+//SuperClasse Entity
 class Entity{
     
     public:
@@ -23,6 +26,7 @@ class Entity{
 
 };
 
+//Classe para representar os Goals(Objetivos)
 class Goal: public Entity{
     public: 
         Goal(int x, int y) : Entity(x, y, type){
@@ -30,6 +34,7 @@ class Goal: public Entity{
         }
 };
 
+//Classe que representa os Players
 class Player: public Entity{
     private:
         int score = 0;
@@ -41,17 +46,24 @@ class Player: public Entity{
 
         bool move(Direction dir, Board &board, mutex &mboard, mutex &mscore);
 
+
+        // Retorna o Score do Player
         int getPlayerScore(mutex &mscore){
+            //Acessa a região crítica do Score
             lock_guard lock(mscore);
             return score;
         }
 
+        //Incrementa o Score do Player
         void incrementScore(mutex &mscore){
+            //Acessa a região crítica do Score
             lock_guard lock(mscore);
             score++;
         }
 
+        //Zera o Score do Player
         void restartScore(mutex &mscore){
+            //Acessa a região crítica do Score
             lock_guard lock(mscore);
             score = 0;
         }

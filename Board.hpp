@@ -9,24 +9,34 @@ using namespace std;
 #include "Types.hpp"
 #include "Entities.hpp"
 
+
+//Classe para representar o tabuleiro
 class Board{
     public:
+        //Matriz de EntityTipes, representa o estado atual do tabuleiro
         vector<vector<EntityType>> grid;
+
+        //Largura e Altura do Tabuleiro
         int width, height;
 
+        //Construtor, inicializa o tabuleiro com EntityType::EMPTY
         Board(int width, int height){
             this->width = width;
             this->height = height;
             grid.resize(width, (vector<EntityType>(height, EntityType::EMPTY)));
         };
 
+
+        //Limpa a matriz do tabuleiro
         void clear(mutex &mboard){
             lock_guard lock(mboard);
             grid.assign(width, vector<EntityType>(height, EntityType::EMPTY));
         }
 
-        //Retorna -1 se for colisão, 0 se for livre e 1 se for goal
+        //Retorna -1 se for houver colisão, 0 se for livre e 1 se for Goal
         int isFreeOrGoal(Direction dir, Position pos){
+            
+            //Para cada tipo de direção, verifica a colisão
             switch (dir)
             {
             case Direction::DOWN:
@@ -64,6 +74,8 @@ class Board{
             return -1;
         }
 
+
+        //Insere uma Entity no tabuleiro
         bool insertEntity(Entity &entity, mutex &mboard){
             lock_guard<mutex> lock(mboard);
 
@@ -74,6 +86,7 @@ class Board{
             return true;
         }
 
+        //Retorna se uma determinada posição do tabuleiro está livre
         bool isEmpty(Position pos, mutex &m){
             lock_guard lock(m);
             return grid[pos.x][pos.y] == EntityType::EMPTY;

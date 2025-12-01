@@ -2,9 +2,7 @@
 
 using namespace std;
 
-
-
-
+//Stuct posição com x e y. Permite comparação e distância 
 struct Position{
     int x;
     int y;
@@ -21,8 +19,7 @@ struct Position{
     }
 };
 
-
-
+//Enums
 enum class GameState{
     START, RUNNING, P1WINS, P2WINS, EXIT
 };

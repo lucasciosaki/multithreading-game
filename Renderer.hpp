@@ -13,17 +13,23 @@
 
 using namespace std;
 
+//Renderizador do jogo
 class Renderer{
     private:
+        
         sf::RenderWindow& window;
+        //Forma das Entities
         sf::RectangleShape shapeGoal;
         sf::RectangleShape shapeP1;
         sf::RectangleShape shapeP2;
         sf::RectangleShape shapeFloor;
+        
+        //Fonte
         sf::Font font;
         
 
     public:
+        //Construtor, define os tamanhos e cores dos quadrados
         Renderer(sf::RenderWindow &win) : window(win){
             font.loadFromFile("./src/font.ttf");
 
@@ -42,6 +48,7 @@ class Renderer{
             shapeFloor.setFillColor(sf::Color(30, 30, 30)); // Cinza escuro
         };
 
+        //Desenha o Score do Player 1
         void drawP1Score(const int &score){
             sf::Text p1score;
             p1score.setFont(font);
@@ -55,6 +62,7 @@ class Renderer{
             window.draw(p1score);
         }
         
+        //Desenha o Score do Player 2
         void drawP2Score(const int &score){
             sf::Text p2score;
             p2score.setFont(font);
@@ -69,6 +77,7 @@ class Renderer{
             window.draw(p2score);
         }
 
+        //Desenha o Ganhador
         void drawWinner(const GameState &state){
             
 
@@ -102,6 +111,7 @@ class Renderer{
             window.draw(text);
         }
 
+        //Desenha o Start
         void drawStart(){
             sf::Text text;
             text.setFont(font);
@@ -116,6 +126,7 @@ class Renderer{
 
 
 
+        //Desenha o Tabuleiro
         void drawGrid(const std::vector<std::vector<EntityType>>& grid) {
         int width = grid.size();
         int height = grid[0].size();
@@ -126,20 +137,23 @@ class Renderer{
                 float py = y * 50.0f;
                 float px = x * 50.0f;
 
-                // 1. Desenha chão sempre
+                //Desenha chão sempre
                 shapeFloor.setPosition(px, py);
                 window.draw(shapeFloor);
 
-                // 2. Desenha objeto por cima
-                if (cell == EntityType::GOAL) { // Goal
+                //Desenha objeto por cima
+                if (cell == EntityType::GOAL) { 
+                    //Goal
                     shapeGoal.setPosition(px, py);
                     window.draw(shapeGoal);
                 } 
-                else if (cell == EntityType::PLAYER1) { // P1
+                else if (cell == EntityType::PLAYER1) { 
+                    //P1
                     shapeP1.setPosition(px, py);
                     window.draw(shapeP1);
                 }
-                else if (cell == EntityType::PLAYER2) { // P2
+                else if (cell == EntityType::PLAYER2) { 
+                    //P2
                     shapeP2.setPosition(px, py);
                     window.draw(shapeP2);
                 }
